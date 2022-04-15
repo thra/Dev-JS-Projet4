@@ -11,8 +11,9 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const modalBtnClose = document.querySelectorAll(".close");
+const modalClose = document.querySelectorAll(".close-modal");
 const modalBtnSubmit = document.querySelectorAll(".btn-submit");
+const form = document.querySelector("form");
 // DOM form
 const inputFirst = document.getElementById("first");
 const inputLast = document.getElementById("last");
@@ -21,18 +22,22 @@ const inputBirthdate = document.getElementById("birthdate");
 const inputQuantity = document.getElementById("quantity");
 const inputsRadio = document.querySelectorAll("input[type=radio]");
 const inputTermOfUse = document.getElementById("checkbox1");
+// DOM confirmation
+const modalConfirmation = document.getElementById("confirmation");
 
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // dismiss modal event
-modalBtnClose.forEach(btn => btn.addEventListener("click", dismissModal));
+modalClose.forEach(btn => btn.addEventListener("click", dismissModal));
 // submit form event
-modalBtnSubmit.forEach(btn => btn.addEventListener("click", formSubmit));
+form.addEventListener("submit", formSubmit);
 
 // launch modal form
 function launchModal() {
     modalbg.style.display = "block";
+    form.style.display = "block";
+    modalConfirmation.style.display = "none";
 }
 
 // dismiss modal form
@@ -46,62 +51,80 @@ function formSubmit(event) {
     event.preventDefault();
     if (inputsAreValid()) {
         // display confirmation modal
-        displayMessageConfirmation();
-        console.log("submit ok");
-    } else {
-        console.log("submit false");
+        displayConfirmationMessage();
     }
 }
 
 // Check each inputs
 function inputsAreValid() {
-    console.log(`first:${inputFirst.value} - isAlpha:${isAlpha(inputFirst.value)}`);
-    console.log(`email:${inputEmail.value} - emailIsValid:${emailIsValid(inputEmail.value)}`);
-    console.log(`birthdate:${inputBirthdate.value} - birthdateIsValid:${birthdateIsValid(inputBirthdate.value)}`);
-    return isAlpha(inputFirst.value) && isAlpha(inputLast.value) && emailIsValid(inputEmail.value) &&
-        birthdateIsValid(inputBirthdate.value) && isNumber(inputQuantity.value) &&
+    console.log(`first:${inputFirst.value} - isAlpha:${isAlpha(inputFirst)}`);
+    console.log(`last:${inputLast.value} - isAlpha:${isAlpha(inputLast)}`);
+    console.log(`email:${inputEmail.value} - emailIsValid:${emailIsValid(inputEmail)}`);
+    console.log(`birthdate:${inputBirthdate.value} - birthdateIsValid:${birthdateIsValid(inputBirthdate)}`);
+    console.log(`quantity:${inputQuantity.value} - isNumber:${isNumber(inputQuantity)}`);
+    console.log("inputTermOfUse.checked:", inputTermOfUse.checked);
+    console.log("atLeastOneLocationIsChecked():", atLeastOneLocationIsChecked());
+
+    return isAlpha(inputFirst) && isAlpha(inputLast) && emailIsValid(inputEmail) &&
+        birthdateIsValid(inputBirthdate) && isNumber(inputQuantity) &&
         termsOfUseIsChecked() && atLeastOneLocationIsChecked();
 }
 
 // test if value contains only letters (a-zA-Z) and min 2 characters
-function isAlpha(value) {
-    return /^([a-zA-Z]){2,}$/.test(value);
+function isAlpha(input) {
+    const value = /^([a-zA-Z]){2,}$/.test(input.value);
+    displayErrorMessage(input, !value);
+    return value;
 }
 
 // test email with regular expression from Wikipedia standard mail syntax
-function emailIsValid(email) {
-    return /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(email);
+function emailIsValid(input) {
+    const value = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(input.value);
+    displayErrorMessage(input, !value);
+    return value;
 }
 
 // test if birthdate is valid not exceed today
-function birthdateIsValid(value) {
-    return new Date(value) < new Date();
+function birthdateIsValid(input) {
+    const value = new Date(input.value) < new Date();
+    displayErrorMessage(input, !value);
+    return value;
 }
 
 // test if value contains at least one number
-function isNumber(value) {
-    return /^([0-9]){1,}$/.test(value);
+function isNumber(input) {
+    const value = /^([0-9]){1,}$/.test(input.value);
+    displayErrorMessage(input, !value);
+    return value;
 }
 
 // test if at least one location is checked
 function atLeastOneLocationIsChecked() {
     let isChecked = false;
     inputsRadio.forEach(input => {
-        console.log(`input.checked:${input.checked}`);
         if (input.checked) {
             isChecked = true;
         }
     });
+    displayErrorMessage(inputsRadio[0], !isChecked);
     return isChecked;
 }
 
+// test if term of use checkbox is checked
 function termsOfUseIsChecked() {
-    console.log(`inputTermOfUse.checked:${inputTermOfUse.checked}`);
-    return inputTermOfUse.checked;
+    const value = inputTermOfUse.checked;
+    console.log("inputTermOfUse:", inputTermOfUse);
+    displayErrorMessage(inputTermOfUse, !value);
+    return value;
 }
 
-function displayMessageConfirmation() {
-    // TODO display main message
-    // change button footer with 'fermer' to close modal
-    // Keep X button to close modal also
+// Display confirmation message
+function displayConfirmationMessage() {
+    form.style.display = "none";
+    modalConfirmation.style.display = "flex";
+}
+
+// Display error message below input in fuction of value in param
+function displayErrorMessage(input, value) {
+    input.parentElement.setAttribute("data-error-visible", value);
 }
