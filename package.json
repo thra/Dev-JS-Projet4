@@ -1,0 +1,38 @@
+{
+    "name": "dev-js-p4",
+    "version": "1.1.0",
+    "description": "developer JS Project 4 OpenClassrooms",
+    "main": "app.js",
+    "scripts": {
+        "build": "webpack",
+        "start": "cross-env NODE_ENV='development' webpack-dev-server --progress --colors --open --config webpack.config.js --mode development"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thra/Dev-JS-Projet4.git"
+    },
+    "keywords": [
+        "DJP4"
+    ],
+    "author": "Thierry Raimond",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/thra/Dev-JS-Projet4/issues"
+    },
+    "homepage": "https://github.com/thra/Dev-JS-Projet4#readme",
+    "devDependencies": {
+        "@babel/core": "^7.17.9",
+        "@babel/preset-env": "^7.16.11",
+        "babel-loader": "^8.2.5",
+        "clean-webpack-plugin": "^3.0.0",
+        "cross-env": "^5.1.6",
+        "css-loader": "^1.0.0",
+        "file-loader": "^1.1.11",
+        "html-loader": "^0.5.5",
+        "html-webpack-plugin": "^3.2.0",
+        "style-loader": "^0.21.0",
+        "webpack": "^4.17.1",
+        "webpack-cli": "^3.0.1",
+        "webpack-dev-server": "^3.7.2"
+    }
+}
