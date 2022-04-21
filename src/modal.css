@@ -84,11 +84,26 @@ p {
         float: right;
         display: block;
     }
-}
-
-@media screen and (max-width: 768px) {
+    .topnav,
     .topnav.responsive {
-        position: relative;
+        position: fixed;
+        height: 51px;
+        width: 100%;
+        z-index: 10;
+        background: white;
+        margin: unset;
+        margin-left: 3.5%;
+    }
+    .topnav img {
+        height: auto;
+    }
+    .topnav .main-navbar,
+    .topnav.responsive .main-navbar {
+        position: fixed;
+        width: 200px;
+        background: white;
+        border-radius: 20px;
+        right: 0;
     }
     .topnav.responsive .icon {
         position: absolute;
@@ -102,7 +117,8 @@ p {
     }
 }
 
-@media screen and (max-width: 540px) {
+
+/* @media screen and (max-width: 540px) {
     .topnav a {
         display: none;
     }
@@ -111,7 +127,7 @@ p {
         display: block;
         margin-top: -15px;
     }
-}
+} */
 
 main {
     font-size: 130%;
@@ -171,7 +187,7 @@ main {
 .bground {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 11;
     left: 0;
     top: 0;
     height: 100%;
@@ -596,6 +612,9 @@ div#confirmation input {
     }
     .hero-text {
         font-size: 15px;
+    }
+    main {
+        margin: 51px 20px 15px;
     }
 }
 
