@@ -2,26 +2,36 @@
 require("./modal.css");
 const domLinker = require("./helpers/domLinker");
 
+/**
+ * Toggle class responsive
+ */
 const editNav = () => {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
+    if (domLinker.myTopNav.className === "topnav") {
+        domLinker.myTopNav.className += " responsive";
     } else {
-        x.className = "topnav";
+        domLinker.myTopNav.className = "topnav";
     }
 };
 
-// launch modal form
+/**
+ * Launch modal form
+ */
 const launchModal = () => {
     domLinker.modalbg.style.display = "block";
     domLinker.form.style.display = "block";
     domLinker.modalConfirmation.style.display = "none";
 }
 
-// dismiss modal form
+/**
+ * dismiss modal form
+ */
 const dismissModal = () => domLinker.modalbg.style.display = "none";
 
-// submit form
+/**
+ * Submit form
+ * 
+ * @param {*} event 
+ */
 const formSubmit = event => {
     // avoid refresh page for each submit
     event.preventDefault();
@@ -31,16 +41,20 @@ const formSubmit = event => {
     }
 }
 
+// event click toggle responsive class
 domLinker.editNavIcon.addEventListener("click", editNav);
-// launch modal event
+// event click launch modal event
 domLinker.modalBtn.forEach(btn => btn.addEventListener("click", launchModal));
-// dismiss modal event
+// event click dismiss modal event
 domLinker.modalClose.forEach(btn => btn.addEventListener("click", dismissModal));
-// submit form event
+// event submit form event
 domLinker.form.addEventListener("submit", formSubmit);
 
-
-// Check each inputs
+/**
+ * Check validity for each inputs
+ * 
+ * @returns {Boolean}
+ */
 const inputsAreValid = () => {
     console.log(`first:${domLinker.inputFirst.value} - isAlpha:${isAlpha(domLinker.inputFirst)}`);
     console.log(`last:${domLinker.inputLast.value} - isAlpha:${isAlpha(domLinker.inputLast)}`);
@@ -55,35 +69,59 @@ const inputsAreValid = () => {
         termsOfUseIsChecked() && atLeastOneLocationIsChecked();
 }
 
-// test if value contains only letters (a-zA-Z) and min 2 characters
+/**
+ * test if input value contains only letters (a-zA-Z) and min 2 characters
+ * 
+ * @param {HTMLElement} input 
+ * @returns {Boolean}
+ */
 const isAlpha = input => {
     const value = /^([a-zA-Z]){2,}$/.test(input.value);
     displayErrorMessage(input, !value);
     return value;
 }
 
-// test email with regular expression from Wikipedia standard mail syntax
+/**
+ * test input email with regular expression from Wikipedia standard mail syntax
+ * 
+ * @param {HTMLElement} input 
+ * @returns {Boolean}
+ */
 const emailIsValid = input => {
     const value = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(input.value);
     displayErrorMessage(input, !value);
     return value;
 }
 
-// test if birthdate is valid not exceed today
+/**
+ * test if input birthdate is valid not exceed today
+ * 
+ * @param {HTMLElement} input 
+ * @returns {Boolean}
+ */
 const birthdateIsValid = input => {
     const value = new Date(input.value) < new Date();
     displayErrorMessage(input, !value);
     return value;
 }
 
-// test if value contains at least one number
+/** 
+ * test if input value contains at least one number
+ * 
+ * @param {HTMLElement} input 
+ * @returns {Boolean}
+ */
 const isNumber = input => {
     const value = /^([0-9]){1,}$/.test(input.value);
     displayErrorMessage(input, !value);
     return value;
 }
 
-// test if at least one location is checked
+/** 
+ * test if at least one location is checked
+ * 
+ * @returns {Boolean}
+ */
 const atLeastOneLocationIsChecked = () => {
     let isChecked = false;
     domLinker.inputsRadio.forEach(input => {
@@ -95,7 +133,11 @@ const atLeastOneLocationIsChecked = () => {
     return isChecked;
 }
 
-// test if term of use checkbox is checked
+/**
+ *  test if term of use checkbox is checked
+ * 
+ * @returns {Boolean}
+ */
 const termsOfUseIsChecked = () => {
     const value = domLinker.inputTermOfUse.checked;
     console.log("inputTermOfUse:", domLinker.inputTermOfUse);
@@ -103,11 +145,19 @@ const termsOfUseIsChecked = () => {
     return value;
 }
 
-// Display confirmation message
+/**
+ * Display confirmation message
+ */
 const displayConfirmationMessage = () => {
     domLinker.form.style.display = "none";
     domLinker.modalConfirmation.style.display = "flex";
 }
 
-// Display error message below input in fuction of value in param
+/**
+ * Display error message below input in fuction of value in param
+ * 
+ * @param {HTMLElement} input 
+ * @param {String} value 
+ * @returns 
+ */
 const displayErrorMessage = (input, value) => input.parentElement.setAttribute("data-error-visible", value);
