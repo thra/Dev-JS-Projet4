@@ -1,0 +1,29 @@
+{
+  "name": "dev-js-p4",
+  "version": "1.0.0",
+  "description": "developer JS Project 4 OpenClassrooms",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thra/Dev-JS-Projet4.git"
+  },
+  "keywords": [
+    "DJP4"
+  ],
+  "author": "Thierry Raimond",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thra/Dev-JS-Projet4/issues"
+  },
+  "homepage": "https://github.com/thra/Dev-JS-Projet4#readme",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-promise": "^6.0.0"
+  }
+}
