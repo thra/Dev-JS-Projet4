@@ -10,3 +10,6 @@
 - from root directory run `npm install`
 - Run development server `npm run start`
 - Build for production `npm run build`
+
+## ESLint
+Run ESLint analyze: `npm run lint`
