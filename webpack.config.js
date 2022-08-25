@@ -11,8 +11,8 @@ const API_URL = JSON.stringify(API_URLS[process.env.NODE_ENV]) // must stringify
 
 const sharedHtmlWebpackConf = name => {
   const result = name === 'index' ? {} : { chunks: ['main'] }
-  result.favicon = path.resolve(__dirname, './src/Logo.png')
-  result.template = path.resolve(__dirname, `./src/${name}.html`)
+  result.favicon = path.resolve(__dirname, './src/assets/favicon.png')
+  result.template = path.resolve(__dirname, `./src/html/${name}.html`)
   result.filename = `${name}.html`
   return result
 }
@@ -24,21 +24,19 @@ const config = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].bundle.js',
-    publicPath: '/'
+    publicPath: '/',
+    assetModuleFilename: 'src/assets/[name][ext]'
   },
   devServer: {
-    port: 8087,
-    contentBase: path.join(__dirname, 'build/'),
+    port: 8089,
     compress: false,
-    historyApiFallback: true,
-    publicPath: '/',
-    watchOptions: {
-      poll: true
+    static: {
+      directory: path.join(__dirname, '/')
     }
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin(sharedHtmlWebpackConf('index')),
+    new HtmlWebpackPlugin(sharedHtmlWebpackConf('index', 'GameOn')),
     // Define global variable from NODE_ENV for the app
     new webpack.DefinePlugin({
       DEBUG: process.env.NODE_ENV === 'development',
@@ -46,43 +44,28 @@ const config = {
     })
   ],
   module: {
-    rules: [{
-      test: /\.js$/,
-      use: {
-        loader: 'babel-loader',
-        options: { presets: ['@babel/preset-env'] }
+    // https://github.com/jantimon/html-webpack-plugin/blob/main/examples/custom-template/template.html
+    rules: [
+      // https://webpack.js.org/loaders/css-loader/
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader', // Creates `style` nodes from JS strings
+          'css-loader' // Translates CSS into CommonJS
+        ]
       },
-      exclude: file => (
-        /node_modules/.test(file)
-      )
-    },
-    {
-      test: /\.(html)$/,
-      use: [{
-        loader: 'html-loader',
-        options: {
-          // https://github.com/webpack-contrib/html-loader
-          interpolate: 'require' // can be true to interpolate all or "require" to just interpolate require
-        }
-      }]
-    },
-    {
-      test: /\.css$/,
-      use: [
-        'style-loader', // creates style nodes from JS strings
-        'css-loader' // translates CSS into CommonJS
-      ]
-    },
-    {
-      test: /\.(png|svg|jpg|jpeg|gif|otf|cur)$/,
-      loader: 'file-loader'
-    }
+      // https://stackoverflow.com/questions/67432536/webpack-5-how-to-display-images-in-html-file
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|otf|cur|mp4)$/i,
+        type: 'asset/resource'
+      }
     ]
   },
-  devtool: '#eval-source-map'
+  devtool: 'eval-source-map'
 }
 
 module.exports = (env, argv) => {
+  console.log(`mode = ${argv.mode}, NODE_ENV = ${process.env.NODE_ENV}`)
   console.log(`mode = ${argv.mode}, NODE_ENV = ${process.env.NODE_ENV}`)
 
   return config
