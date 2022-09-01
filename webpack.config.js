@@ -22,13 +22,14 @@ const config = {
     main: path.resolve(__dirname, './src/app.js')
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './docs'),
     filename: '[name].bundle.js',
     publicPath: '/',
-    assetModuleFilename: 'src/assets/[name][ext]'
+    assetModuleFilename: 'src/assets/[name][ext]',
+    clean: true
   },
   devServer: {
-    port: 8089,
+    port: 8090,
     compress: false,
     static: {
       directory: path.join(__dirname, '/')
@@ -61,11 +62,10 @@ const config = {
       }
     ]
   },
-  devtool: 'eval-source-map'
+  devtool: process.env.NODE_ENV !== 'production' ? 'source-map' : 'eval-source-map'
 }
 
 module.exports = (env, argv) => {
-  console.log(`mode = ${argv.mode}, NODE_ENV = ${process.env.NODE_ENV}`)
   console.log(`mode = ${argv.mode}, NODE_ENV = ${process.env.NODE_ENV}`)
 
   return config
