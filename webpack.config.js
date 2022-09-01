@@ -22,11 +22,10 @@ const config = {
     main: path.resolve(__dirname, './src/app.js')
   },
   output: {
-    path: path.resolve(__dirname, './docs'),
+    path: path.resolve(__dirname, './dist'),
     filename: '[name].bundle.js',
     publicPath: '/',
-    assetModuleFilename: 'src/assets/[name][ext]',
-    clean: true
+    assetModuleFilename: 'src/assets/[name][ext]'
   },
   devServer: {
     port: 8090,
