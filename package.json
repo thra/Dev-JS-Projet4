@@ -5,6 +5,7 @@
     "main": "./src/app.js",
     "scripts": {
         "build": "webpack --mode production",
+        "build": "cross-env NODE_ENV='production' webpack --config webpack.config.js --mode production",
         "start": "cross-env NODE_ENV='development' webpack-dev-server --progress --color --open --config webpack.config.js --mode development",
         "lint": "eslint --ext .js src"
     },
