@@ -15,5 +15,6 @@ module.exports = {
   inputQuantity: document.getElementById('quantity'),
   inputsRadio: document.querySelectorAll('input[type=radio]'),
   inputTermOfUse: document.getElementById('checkbox1'),
-  modalConfirmation: document.getElementById('confirmation')
+  modalConfirmation: document.getElementById('confirmation'),
+  spanVersion: document.getElementById('version')
 }

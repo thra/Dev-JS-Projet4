@@ -67,7 +67,8 @@ const dateNotExceedToday = value => new Date(value) < new Date()
  * @returns Boolean
  */
 const isErrorMessageDisplayed = (input, value) => {
-  console.log(input.value, value)
+  // eslint-disable-next-line no-undef
+  DEBUG && console.debug(input.value, value)
   input.parentNode.setAttribute('data-error-visible', !value)
   return value
 }

@@ -41,7 +41,8 @@ const config = {
     // Define global variable from NODE_ENV for the app
     new webpack.DefinePlugin({
       DEBUG: process.env.NODE_ENV === 'development',
-      API_URL
+      API_URL,
+      VERSION: JSON.stringify(require('./package.json').version)
     })
   ],
   module: {
