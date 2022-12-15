@@ -22,7 +22,7 @@ const config = {
     main: path.resolve(__dirname, './src/app.js')
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './docs'),
     filename: '[name].bundle.js',
     publicPath: '/',
     assetModuleFilename: 'src/assets/[name][ext]'
@@ -40,7 +40,8 @@ const config = {
     // Define global variable from NODE_ENV for the app
     new webpack.DefinePlugin({
       DEBUG: process.env.NODE_ENV === 'development',
-      API_URL
+      API_URL,
+      VERSION: JSON.stringify(require('./package.json').version)
     })
   ],
   module: {
@@ -65,7 +66,6 @@ const config = {
 }
 
 module.exports = (env, argv) => {
-  console.log(`mode = ${argv.mode}, NODE_ENV = ${process.env.NODE_ENV}`)
   console.log(`mode = ${argv.mode}, NODE_ENV = ${process.env.NODE_ENV}`)
 
   return config
