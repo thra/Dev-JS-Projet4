@@ -18,8 +18,8 @@ const config = {
   output: {
     path: path.resolve(__dirname, './docs'),
     filename: '[name].bundle.js',
-    publicPath: '',
-    assetModuleFilename: 'assets/[name][ext]',
+    publicPath: '/',
+    assetModuleFilename: 'src/assets/[name][ext]',
     clean: true
   },
   devServer: {
@@ -41,6 +41,14 @@ const config = {
   module: {
     // https://github.com/jantimon/html-webpack-plugin/blob/main/examples/custom-template/template.html
     rules: [
+      {
+        test: /\.(html)$/,
+        use: [
+          {
+            loader: 'html-loader'
+          }
+        ]
+      },
       // https://webpack.js.org/loaders/css-loader/
       {
         test: /\.css$/,
