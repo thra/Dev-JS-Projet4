@@ -18,8 +18,8 @@ const config = {
   output: {
     path: path.resolve(__dirname, './docs'),
     filename: '[name].bundle.js',
-    publicPath: '/',
-    assetModuleFilename: 'src/assets/[name][ext]',
+    publicPath: '',
+    assetModuleFilename: 'assets/[name][ext]',
     clean: true
   },
   devServer: {
